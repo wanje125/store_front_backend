@@ -41,8 +41,9 @@ These are the notes from a meeting with the frontend developer that describe wha
 * Create new order (token required): [POST] '/users/:id/orders'
 
 {
-    "status": "active",
-    "user_id": 8
+    "product_id": 1,
+    "quantity": 100,
+    "status": 'active',
 }
 
 ## Data Shapes
