@@ -4,21 +4,46 @@ The company stakeholders want to create an online storefront to showcase their g
 These are the notes from a meeting with the frontend developer that describe what endpoints the API needs to supply, as well as data shapes the frontend and backend have agreed meet the requirements of the application. 
 
 ## API Endpoints
-#### Products
-- Index 
-- Show
-- Create [token required]
-- [OPTIONAL] Top 5 most popular products 
-- [OPTIONAL] Products by category (args: product category)
+### Products Endpoints
+* Index all products : [GET] '/products'
+
+* Show product by Id: [GET] '/products/:id'
+
+* Create new product : [POST] '/products'
+
+{ 
+    "name": "laptop1",
+    "price": 200,
+    "category": "laptop" 
+}
+
+* Delete product by Id: [DELETE] '/products/:id'
+
 
 #### Users
-- Index [token required]
-- Show [token required]
-- Create N[token required]
+* Index all users (token required): [GET] '/users'
+
+* Show user by Id (token required): [GET] '/users/:id'
+
+* Create new user (token required): [POST] '/users'
+
+{
+    "firstName": "chris",
+    "lastName": "cho",
+    "password": "1234",
+}
+
 
 #### Orders
-- Current Order by user (args: user id)[token required]
-- [OPTIONAL] Completed Orders by user (args: user id)[token required]
+* get user's order (token required): [GET] '/users/:id/orders'
+
+
+* Create new order (token required): [POST] '/users/:id/orders'
+
+{
+    "status": "active",
+    "user_id": 8
+}
 
 ## Data Shapes
 #### Product
@@ -27,11 +52,23 @@ These are the notes from a meeting with the frontend developer that describe wha
 - price
 - [OPTIONAL] category
 
+Table: products(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    price INTEGER NOT NULL,
+    category VARCHAR(100)
+);
 #### User
 - id
 - firstName
 - lastName
 - password
+Table: Users(
+    id SERIAL PRIMARY KEY,
+    firstName VARCHAR(100) NOT NULL,
+    lastName VARCHAR(100) NOT NULL,
+    password VARCHAR(100) NOT NULL
+);
 
 #### Orders
 - id
@@ -39,4 +76,11 @@ These are the notes from a meeting with the frontend developer that describe wha
 - quantity of each product in the order
 - user_id
 - status of order (active or complete)
-
+- 
+Table: Order_products(
+    id SERIAL PRIMARY KEY,
+    quantity INTEGER NOT NULL,
+    order_id INTEGER REFERENCES orders(id) NOT NULL,
+    product_id INTEGER REFERENCES products(id) NOT NULL
+    status VARCHAAR(100)
+)
